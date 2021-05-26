@@ -8,6 +8,7 @@ import os
 import pyrogram
 import aiofiles
 from pyrogram import Client, filters
+from pyrogram.types import InlineKeyboardMarkup, InlineKeyboardButton
 
 FayasNoushad = Client(
     "Pyrogram Json Bot",
@@ -58,6 +59,11 @@ ABOUT_BUTTONS = InlineKeyboardMarkup(
         InlineKeyboardButton('Home', callback_data='home'),
         InlineKeyboardButton('Help', callback_data='help'),
         InlineKeyboardButton('Close', callback_data='close')
+        ]]
+    )
+JSON_BUTTON = InlineKeyboardMarkup(
+        [[
+        InlineKeyboardButton('⚙ Join Updates Channel ⚙', url='https://telegram.me/FayasNoushad')
         ]]
     )
 
@@ -111,29 +117,23 @@ async def about(bot, update):
 @FayasNoushad.on_message(filters.private)
 async def private(bot, update):
     json = update
-    if len(json) > 4096:
-        async with aiofiles.open('update.json') as json_file:
-            await json_file.write(json)
-            await update.reply_document(document='update.json')
-        os.remove('update.json')
-    else:
-        await update.reply_text(
-            text=json,
-            disable_web_page_preview=True
+    async with aiofiles.open('update.json') as json_file:
+        await json_file.write(json)
+        await update.reply_document(
+            document='update.json',
+            reply_markup=JSON_BUTTON
         )
+    os.remove('update.json')
 
 @FayasNoushad.on_message(filters.group & filters.command(["json"]))
 async def group(bot, update):
     json = update.reply_to_message
-    if len(json) > 4096:
-        async with aiofiles.open('update.json') as json_file:
-            await json_file.write(json)
-            await update.reply_document(document='update.json')
-        os.remove('update.json')
-    else:
-        await update.reply_text(
-            text=json,
-            disable_web_page_preview=True
+    async with aiofiles.open('update.json') as json_file:
+        await json_file.write(json)
+        await update.reply_document(
+            document='update.json',
+            reply_markup=JSON_BUTTON
         )
+    os.remove('update.json')
 
 FayasNoushad.run()
