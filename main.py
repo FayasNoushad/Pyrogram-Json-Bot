@@ -43,3 +43,5 @@ async def group(bot, update):
             text=json,
             disable_web_page_preview=True
         )
+
+FayasNoushad.run()
