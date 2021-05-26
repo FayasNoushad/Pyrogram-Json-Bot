@@ -1,0 +1,3 @@
+pyrogram
+tgcrypto
+https://github.com/Tinche/aiofiles/archive/master.zip
