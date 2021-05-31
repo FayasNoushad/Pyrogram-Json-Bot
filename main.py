@@ -114,7 +114,7 @@ async def about(bot, update):
         reply_markup=ABOUT_BUTTONS
     )
 
-@FayasNoushad.on_message(filters.private)
+@FayasNoushad.on_message(filters.private & filters.text | filters.media | filters.service)
 async def private(bot, update):
     json = update
     async with aiofiles.open('update.json') as json_file:
