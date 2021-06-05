@@ -116,7 +116,7 @@ async def about(bot, update):
 
 @FayasNoushad.on_message(filters.private & filters.text | filters.media | filters.service)
 async def private(bot, update):
-    json = update
+    json = str(update)
     async with aiofiles.open('update.json', 'w') as json_file:
         await json_file.write(json)
         await update.reply_document(
@@ -127,7 +127,7 @@ async def private(bot, update):
 
 @FayasNoushad.on_message(filters.group & filters.command(["json"]))
 async def group(bot, update):
-    json = update.reply_to_message
+    json = str(update.reply_to_message)
     async with aiofiles.open('update.json', 'w') as json_file:
         await json_file.write(json)
         await update.reply_document(
