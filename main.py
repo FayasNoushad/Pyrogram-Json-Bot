@@ -126,10 +126,13 @@ async def private(bot, update):
         os.makedirs(f'./{str(update.from_user.id)}/')
     async with aiofiles.open(file_loc, 'w') as json_file:
         await json_file.write(str(update))
-        await update.reply_document(
-            document=file_loc,
-            reply_markup=JSON_BUTTON
-        )
+        try:
+            await update.reply_document(
+                document=file_loc,
+                reply_markup=JSON_BUTTON
+            )
+        except Exception as error:
+            print(error)
     os.remove(file_loc)
 
 
@@ -140,10 +143,13 @@ async def group(bot, update):
         os.makedirs(f'./{str(update.from_user.id)}/')
     async with aiofiles.open(file_loc, 'w') as json_file:
         await json_file.write(str(update.reply_to_message))
-        await update.reply_document(
-            document=file_loc,
-            reply_markup=JSON_BUTTON
-        )
+        try:
+            await update.reply_document(
+                document=file_loc,
+                reply_markup=JSON_BUTTON
+            )
+        except Exception as error:
+            print(error)
     os.remove(file_loc)
 
 
