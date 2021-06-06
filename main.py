@@ -123,7 +123,7 @@ async def about(bot, update):
 async def private(bot, update):
     file_loc = './' + str(update.from_user.id) + '/json.txt'
     if not os.path.exists(file_loc):
-        os.makedirs(file_loc)
+        os.makedirs(f'./{str(update.from_user.id)}/')
     async with aiofiles.open(file_loc, 'w') as json_file:
         await json_file.write(str(update))
         await update.reply_document(
@@ -137,7 +137,7 @@ async def private(bot, update):
 async def group(bot, update):
     file_loc = './' + str(update.from_user.id) + '/json.txt'
     if not os.path.exists(file_loc):
-        os.makedirs(file_loc)
+        os.makedirs(f'./{str(update.from_user.id)}/')
     async with aiofiles.open(file_loc, 'w') as json_file:
         await json_file.write(str(update.reply_to_message))
         await update.reply_document(
