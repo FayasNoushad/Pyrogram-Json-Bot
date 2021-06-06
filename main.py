@@ -125,7 +125,7 @@ async def private(bot, update):
     if not os.path.exists(file_loc):
         os.makedirs(file_loc)
     async with aiofiles.open(file_loc, 'w') as json_file:
-        await json_file.write((str(update))
+        await json_file.write(str(update))
         await update.reply_document(
             document=file_loc,
             reply_markup=JSON_BUTTON
