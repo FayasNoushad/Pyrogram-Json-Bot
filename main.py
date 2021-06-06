@@ -133,7 +133,7 @@ async def private(bot, update):
     os.remove(file_loc)
 
 
-@FayasNoushad.on_message(filters.group & filters.command(["json"]) & filters.reply)
+@FayasNoushad.on_message(filters.group & filters.command(["json"]))
 async def group(bot, update):
     file_loc = './' + str(update.from_user.id) + '/json.txt'
     if not os.path.exists(file_loc):
