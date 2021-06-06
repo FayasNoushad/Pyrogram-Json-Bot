@@ -117,23 +117,23 @@ async def about(bot, update):
 @FayasNoushad.on_message(filters.private & filters.text | filters.media | filters.service)
 async def private(bot, update):
     json = str(update)
-    async with aiofiles.open('update.json', 'w') as json_file:
+    async with aiofiles.open('json.txt', 'w') as json_file:
         await json_file.write(json)
         await update.reply_document(
-            document='update.json',
+            document='json.txt',
             reply_markup=JSON_BUTTON
         )
-    os.remove('update.json')
+    os.remove('json.txt')
 
 @FayasNoushad.on_message(filters.group & filters.command(["json"]))
 async def group(bot, update):
     json = str(update.reply_to_message)
-    async with aiofiles.open('update.json', 'w') as json_file:
+    async with aiofiles.open('json.txt', 'w') as json_file:
         await json_file.write(json)
         await update.reply_document(
-            document='update.json',
+            document='json.txt',
             reply_markup=JSON_BUTTON
         )
-    os.remove('update.json')
+    os.remove('json.txt')
 
 FayasNoushad.run()
