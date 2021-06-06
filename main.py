@@ -67,6 +67,7 @@ JSON_BUTTON = InlineKeyboardMarkup(
         ]]
     )
 
+
 @FayasNoushad.on_callback_query()
 async def cb_handler(bot, update):
     if update.data == "home":
@@ -90,6 +91,7 @@ async def cb_handler(bot, update):
     else:
         await update.message.delete()
 
+
 @FayasNoushad.on_message(filters.private & filters.command(["start"]))
 async def start(bot, update):
     await update.reply_text(
@@ -97,6 +99,7 @@ async def start(bot, update):
         disable_web_page_preview=True,
         reply_markup=START_BUTTONS
     )
+
 
 @FayasNoushad.on_message(filters.private & filters.command(["help"]))
 async def help(bot, update):
@@ -106,6 +109,7 @@ async def help(bot, update):
         reply_markup=HELP_BUTTONS
     )
 
+
 @FayasNoushad.on_message(filters.private & filters.command(["about"]))
 async def about(bot, update):
     await update.reply_text(
@@ -114,26 +118,32 @@ async def about(bot, update):
         reply_markup=ABOUT_BUTTONS
     )
 
-@FayasNoushad.on_message(filters.private & filters.text | filters.media | filters.service)
-async def private(bot, update):
-    json = str(update)
-    async with aiofiles.open('json.txt', 'w') as json_file:
-        await json_file.write(json)
-        await update.reply_document(
-            document='json.txt',
-            reply_markup=JSON_BUTTON
-        )
-    os.remove('json.txt')
 
-@FayasNoushad.on_message(filters.group & filters.command(["json"]))
-async def group(bot, update):
-    json = str(update.reply_to_message)
-    async with aiofiles.open('json.txt', 'w') as json_file:
-        await json_file.write(json)
+@FayasNoushad.on_message(filters.private & (filters.text | filters.media | filters.service) & ~filters.reply & ~filters.edited)
+async def private(bot, update):
+    file_loc = './' + str(update.from_user.id) + '/json.txt'
+    if not os.path.exists(file_loc):
+        os.makedirs(file_loc)
+    async with aiofiles.open(, 'w') as json_file:
+        await json_file.write((str(update))
         await update.reply_document(
-            document='json.txt',
+            document=file_loc,
             reply_markup=JSON_BUTTON
         )
-    os.remove('json.txt')
+    os.remove(file_loc)
+
+
+@FayasNoushad.on_message(filters.group & filters.command(["json"]) & filters.reply)
+async def group(bot, update):
+    file_loc = './' + str(update.from_user.id) + '/json.txt'
+    if not os.path.exists(file_loc):
+        os.makedirs(file_loc)
+    async with aiofiles.open(file_loc, 'w') as json_file:
+        await json_file.write(str(update.reply_to_message))
+        await update.reply_document(
+            document=file_loc,
+            reply_markup=JSON_BUTTON
+        )
+    os.remove(file_loc)
 
 FayasNoushad.run()
