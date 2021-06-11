@@ -118,7 +118,6 @@ async def about(bot, update):
         reply_markup=ABOUT_BUTTONS
     )
 
-
 @FayasNoushad.on_message(filters.private & (filters.text | filters.media | filters.service) & ~filters.reply & ~filters.edited)
 async def private(bot, update):
     json = update
