@@ -6,7 +6,7 @@
 
 import os
 import pyrogram
-import aiofiles
+from io import BytesIO
 from pyrogram import Client, filters
 from pyrogram.types import InlineKeyboardMarkup, InlineKeyboardButton
 
@@ -121,36 +121,22 @@ async def about(bot, update):
 
 @FayasNoushad.on_message(filters.private & (filters.text | filters.media | filters.service) & ~filters.reply & ~filters.edited)
 async def private(bot, update):
-    file_loc = './' + str(update.from_user.id) + '/json.txt'
-    if not os.path.exists(file_loc):
-        os.makedirs(f'./{str(update.from_user.id)}/')
-    async with aiofiles.open(file_loc, 'w') as json_file:
-        await json_file.write(str(update))
-        try:
-            await update.reply_document(
-                document=file_loc,
-                reply_markup=JSON_BUTTON
-            )
-        except Exception as error:
-            print(error)
-    os.remove(file_loc)
-
+    json = update
+    with BytesIO(str.encode(str(json))) as json_file:
+        json_file.name = "json.text"
+        await json.reply_document(
+            document=json_file,
+            reply_markup=JSON_BUTTON
+        )
 
 @FayasNoushad.on_message((filters.group | filters.private) & filters.command(["json"]))
 async def group(bot, update):
-    file_loc = './' + str(update.from_user.id) + '/json.txt'
-    if not os.path.exists(file_loc):
-        os.makedirs(f'./{str(update.from_user.id)}/')
-    async with aiofiles.open(file_loc, 'w') as json_file:
-        await json_file.write(str(update.reply_to_message))
-        try:
-            await update.reply_document(
-                document=file_loc,
-                reply_markup=JSON_BUTTON
-            )
-        except Exception as error:
-            print(error)
-    os.remove(file_loc)
-
+    json = update.reply_to_message
+    with BytesIO(str.encode(str(json))) as json_file:
+        json_file.name = "json.text"
+        await json.reply_document(
+            document=json_file,
+            reply_markup=JSON_BUTTON
+        )
 
 FayasNoushad.run()
