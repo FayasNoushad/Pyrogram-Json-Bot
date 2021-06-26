@@ -5,7 +5,6 @@ A telegram to pyrogram json bot
 ---
 
 ```
-Please fork this repository don't import code
 Made with Python3
 (C) @FayasNoushad
 Copyright permission under MIT License
