@@ -155,10 +155,9 @@ async def inline(bot, update):
 
 
 def json(json, id):
-    path = f"./DOWNLOADS/{str(id)}/json.txt"
-    with open(path, "wb") as f:
-        f.write(json)
-    return path
+    with BytesIO(str.encode(str(json))) as json_file:
+        json_file.name = "json.txt"
+    return "json.txt"
 
 
 Bot.run()
