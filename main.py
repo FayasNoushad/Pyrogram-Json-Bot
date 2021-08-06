@@ -156,9 +156,4 @@ async def inline(bot, update):
         os.remove(file)
 
 
-def json(json):
-    
-    return json_file
-
-
 Bot.run()
