@@ -144,7 +144,8 @@ async def reply_file(bot, update):
 async def inline(bot, update):
     await update.answer(
         results=[],
-        switch_pm_text="Your json was sent to pm"
+        switch_pm_text="Your json was sent to pm",
+        switch_pm_parameter="start"
     )
     with BytesIO(str.encode(str(update))) as file:
         file.name = "json.txt"
