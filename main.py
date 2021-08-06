@@ -130,7 +130,7 @@ async def group(bot, update):
 
 
 async def reply_file(bot, update):
-    path = json(update)
+    path = json(update, update.from_user.id)
     await update.reply_document(
         document=path,
         quote=True,
