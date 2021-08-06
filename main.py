@@ -137,7 +137,10 @@ async def reply_file(bot, update):
             quote=True,
             reply_markup=JSON_BUTTON
         )
-        os.remove(file)
+        try:
+            os.remove(file)
+        except:
+            pass
 
 
 @Bot.on_inline_query()
@@ -154,7 +157,10 @@ async def inline(bot, update):
             document=file,
             reply_markup=JSON_BUTTON
         )
-        os.remove(file)
+        try:
+            os.remove(file)
+        except:
+            pass
 
 
 Bot.run()
