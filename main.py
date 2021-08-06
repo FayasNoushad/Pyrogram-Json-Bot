@@ -136,6 +136,22 @@ async def reply_file(bot, update):
         quote=True,
         reply_markup=JSON_BUTTON
     )
+    os.remove(path)
+
+
+@Bot.on_inline_query()
+async def inline(bot, update):
+    path = json(update, update.from_user.id)
+    await update.answer(
+        results=[],
+        switch_pm_text="Your json was sent to pm"
+    )
+    await bot.send_document(
+        chat_id=update.from_user.id,
+        document=path,
+        reply_markup=JSON_BUTTON
+    )
+    os.remove(path)
 
 
 def json(json, id):
