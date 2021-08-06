@@ -130,34 +130,34 @@ async def group(bot, update):
 
 
 async def reply_file(bot, update):
-    path = json(update, update.from_user.id)
+    file = json(update, update.from_user.id)
     await update.reply_document(
-        document=path,
+        document=file,
         quote=True,
         reply_markup=JSON_BUTTON
     )
-    os.remove(path)
+    os.remove(file)
 
 
 @Bot.on_inline_query()
 async def inline(bot, update):
-    path = json(update, update.from_user.id)
+    file = json(update)
     await update.answer(
         results=[],
         switch_pm_text="Your json was sent to pm"
     )
     await bot.send_document(
         chat_id=update.from_user.id,
-        document=path,
+        document=file,
         reply_markup=JSON_BUTTON
     )
-    os.remove(path)
+    os.remove(file)
 
 
-def json(json, id):
+def json(json):
     with BytesIO(str.encode(str(json))) as json_file:
         json_file.name = "json.txt"
-    return "json.txt"
+    return json_file
 
 
 Bot.run()
