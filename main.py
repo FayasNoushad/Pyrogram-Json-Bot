@@ -10,7 +10,7 @@ from io import BytesIO
 from pyrogram import Client, filters
 from pyrogram.types import InlineKeyboardMarkup, InlineKeyboardButton
 
-FayasNoushad = Client(
+Bot = Client(
     "Pyrogram Json Bot",
     bot_token = os.environ["BOT_TOKEN"],
     api_id = int(os.environ["API_ID"]),
@@ -68,7 +68,7 @@ JSON_BUTTON = InlineKeyboardMarkup(
     )
 
 
-@FayasNoushad.on_callback_query()
+@Bot.on_callback_query()
 async def cb_handler(bot, update):
     if update.data == "home":
         await update.message.edit_text(
@@ -92,7 +92,7 @@ async def cb_handler(bot, update):
         await update.message.delete()
 
 
-@FayasNoushad.on_message(filters.private & filters.command(["start"]))
+@Bot.on_message(filters.private & filters.command(["start"]))
 async def start(bot, update):
     await update.reply_text(
         text=START_TEXT.format(update.from_user.mention),
@@ -101,7 +101,7 @@ async def start(bot, update):
     )
 
 
-@FayasNoushad.on_message(filters.private & filters.command(["help"]))
+@Bot.on_message(filters.private & filters.command(["help"]))
 async def help(bot, update):
     await update.reply_text(
         text=HELP_TEXT,
@@ -110,7 +110,7 @@ async def help(bot, update):
     )
 
 
-@FayasNoushad.on_message(filters.private & filters.command(["about"]))
+@Bot.on_message(filters.private & filters.command(["about"]))
 async def about(bot, update):
     await update.reply_text(
         text=ABOUT_TEXT,
@@ -119,12 +119,12 @@ async def about(bot, update):
     )
 
 
-@FayasNoushad.on_message(filters.private & (filters.text | filters.media | filters.service) & ~filters.reply & ~filters.edited)
+@Bot.on_message(filters.private & (filters.text | filters.media | filters.service) & ~filters.reply & ~filters.edited)
 async def private(bot, update):
     await reply_file(bot, update)
 
 
-@FayasNoushad.on_message((filters.group | filters.private) & filters.command(["json"]))
+@Bot.on_message((filters.group | filters.private) & filters.command(["json"]))
 async def group(bot, update):
     await reply_file(bot, update.reply_to_message)
 
