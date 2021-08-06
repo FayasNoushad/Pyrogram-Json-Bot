@@ -161,4 +161,4 @@ def json(json, id):
     return path
 
 
-FayasNoushad.run()
+Bot.run()
