@@ -155,7 +155,7 @@ async def inline(bot, update):
 
 
 def json(json, id):
-    path = str(id) + "/json.txt"
+    path = f"/{str(id)}/json.txt"
     with open(path, "wb") as f:
         f.write(json)
     return path
