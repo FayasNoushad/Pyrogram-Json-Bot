@@ -118,24 +118,31 @@ async def about(bot, update):
         reply_markup=ABOUT_BUTTONS
     )
 
+
 @FayasNoushad.on_message(filters.private & (filters.text | filters.media | filters.service) & ~filters.reply & ~filters.edited)
 async def private(bot, update):
-    json = update
-    with BytesIO(str.encode(str(json))) as json_file:
-        json_file.name = "json.text"
-        await json.reply_document(
-            document=json_file,
-            reply_markup=JSON_BUTTON
-        )
+    await reply_file(bot, update)
+
 
 @FayasNoushad.on_message((filters.group | filters.private) & filters.command(["json"]))
 async def group(bot, update):
-    json = update.reply_to_message
-    with BytesIO(str.encode(str(json))) as json_file:
-        json_file.name = "json.text"
-        await json.reply_document(
-            document=json_file,
-            reply_markup=JSON_BUTTON
-        )
+    await reply_file(bot, update.reply_to_message)
+
+
+async def reply_file(bot, update):
+    path = json(update)
+    await update.reply_document(
+        document=path,
+        quote=True,
+        reply_markup=JSON_BUTTON
+    )
+
+
+def json(json, id):
+    path = str(id) + "/json.txt"
+    with open(path, "wb") as f:
+        f.write(json)
+    return path
+
 
 FayasNoushad.run()
