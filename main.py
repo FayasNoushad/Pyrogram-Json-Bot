@@ -1,14 +1,9 @@
-# Made with python3
-# (C) @FayasNoushad
-# Copyright permission under MIT License
-# All rights reserved by FayasNoushad
-# License -> https://github.com/FayasNoushad/Pyrogram-Json-Bot/blob/main/LICENSE
-
 import os
 import pyrogram
 from io import BytesIO
 from pyrogram import Client, filters
 from pyrogram.types import InlineKeyboardMarkup, InlineKeyboardButton
+
 
 Bot = Client(
     "Pyrogram Json Bot",
@@ -17,55 +12,62 @@ Bot = Client(
     api_hash = os.environ["API_HASH"]
 )
 
-START_TEXT = """
-Hello {}, I am a telegram to pyrogram json bot. I can send details json of a message.
+START_TEXT = """Hello {},
+I am a telegram to pyrogram json bot. I can send details json of a message.
 
-Made by @FayasNoushad
-"""
-HELP_TEXT = """
+Made by @FayasNoushad"""
+HELP_TEXT = """**More Help**
+
 - Just send any type of message for json details
 - Add me to group and send any type of message in group and reply /json for json details of message
 
-Made by @FayasNoushad
-"""
-ABOUT_TEXT = """
+Made by @FayasNoushad"""
+ABOUT_TEXT = """**About Me**
+
 - **Bot :** `Pyrogram Json Bot`
 - **Creator :** [Fayas](https://telegram.me/TheFayas)
 - **Channel :** [Fayas Noushad](https://telegram.me/FayasNoushad)
 - **Source :** [Click here](https://github.com/FayasNoushad/Pyrogram-Json-Bot)
 - **Language :** [Python3](https://python.org)
-- **Library :** [Pyrogram](https://pyrogram.org)
-- **Server :** [Heroku](https://heroku.com)
-"""
+- **Library :** [Pyrogram](https://pyrogram.org)"""
 START_BUTTONS = InlineKeyboardMarkup(
-        [[
-        InlineKeyboardButton('Channel', url='https://telegram.me/FayasNoushad'),
-        InlineKeyboardButton('Feedback', url='https://telegram.me/TheFayas')
-        ],[
-        InlineKeyboardButton('Help', callback_data='help'),
-        InlineKeyboardButton('About', callback_data='about'),
-        InlineKeyboardButton('Close', callback_data='close')
-        ]]
-    )
+    [
+        [
+            InlineKeyboardButton('Channel', url='https://telegram.me/FayasNoushad'),
+            InlineKeyboardButton('Feedback', url='https://telegram.me/TheFayas')
+        ],
+        [
+            InlineKeyboardButton('Help', callback_data='help'),
+            InlineKeyboardButton('About', callback_data='about'),
+            InlineKeyboardButton('Close', callback_data='close')
+        ]
+    ]
+)
 HELP_BUTTONS = InlineKeyboardMarkup(
-        [[
-        InlineKeyboardButton('Home', callback_data='home'),
-        InlineKeyboardButton('About', callback_data='about'),
-        InlineKeyboardButton('Close', callback_data='close')
-        ]]
-    )
+    [
+        [
+            InlineKeyboardButton('Home', callback_data='home'),
+            InlineKeyboardButton('About', callback_data='about'),
+            InlineKeyboardButton('Close', callback_data='close')
+        ]
+    ]
+)
 ABOUT_BUTTONS = InlineKeyboardMarkup(
-        [[
-        InlineKeyboardButton('Home', callback_data='home'),
-        InlineKeyboardButton('Help', callback_data='help'),
-        InlineKeyboardButton('Close', callback_data='close')
-        ]]
-    )
+    [
+        [
+            InlineKeyboardButton('Home', callback_data='home'),
+            InlineKeyboardButton('Help', callback_data='help'),
+            InlineKeyboardButton('Close', callback_data='close')
+        ]
+    ]
+)
 JSON_BUTTON = InlineKeyboardMarkup(
-        [[
-        InlineKeyboardButton('⚙ Join Updates Channel ⚙', url='https://telegram.me/FayasNoushad')
-        ]]
-    )
+    [
+        [
+            InlineKeyboardButton('⚙ Join Updates Channel ⚙', url='https://telegram.me/FayasNoushad')
+        ]
+    ]
+)
 
 
 @Bot.on_callback_query()
