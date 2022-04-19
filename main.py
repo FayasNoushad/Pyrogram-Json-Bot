@@ -7,29 +7,32 @@ from pyrogram.types import InlineKeyboardMarkup, InlineKeyboardButton
 
 Bot = Client(
     "Pyrogram Json Bot",
-    bot_token = os.environ["BOT_TOKEN"],
-    api_id = int(os.environ["API_ID"]),
-    api_hash = os.environ["API_HASH"]
+    bot_token = os.environ.get("BOT_TOKEN"),
+    api_id = int(os.environ.get("API_ID")),
+    api_hash = os.environ.get("API_HASH")
 )
 
 START_TEXT = """Hello {},
 I am a telegram to pyrogram json bot. I can send details json of a message.
 
 Made by @FayasNoushad"""
+
 HELP_TEXT = """**More Help**
 
 - Just send any type of message for json details
 - Add me to group and send any type of message in group and reply /json for json details of message
 
 Made by @FayasNoushad"""
+
 ABOUT_TEXT = """**About Me**
 
 - **Bot :** `Pyrogram Json Bot`
-- **Creator :** [Fayas](https://telegram.me/TheFayas)
+- **Developer :** [Fayas](https://github.com/FayasNoushad)
 - **Channel :** [Fayas Noushad](https://telegram.me/FayasNoushad)
 - **Source :** [Click here](https://github.com/FayasNoushad/Pyrogram-Json-Bot)
 - **Language :** [Python3](https://python.org)
 - **Library :** [Pyrogram](https://pyrogram.org)"""
+
 START_BUTTONS = InlineKeyboardMarkup(
     [
         [
@@ -43,6 +46,7 @@ START_BUTTONS = InlineKeyboardMarkup(
         ]
     ]
 )
+
 HELP_BUTTONS = InlineKeyboardMarkup(
     [
         [
@@ -52,6 +56,7 @@ HELP_BUTTONS = InlineKeyboardMarkup(
         ]
     ]
 )
+
 ABOUT_BUTTONS = InlineKeyboardMarkup(
     [
         [
@@ -61,6 +66,7 @@ ABOUT_BUTTONS = InlineKeyboardMarkup(
         ]
     ]
 )
+
 JSON_BUTTON = InlineKeyboardMarkup(
     [
         [
