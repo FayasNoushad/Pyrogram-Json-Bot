@@ -1,9 +1,11 @@
 import os
-import pyrogram
+import dotenv
 from io import BytesIO
 from pyrogram import Client, filters
 from pyrogram.types import InlineKeyboardMarkup, InlineKeyboardButton
 
+
+dotenv.load_dotenv()
 
 Bot = Client(
     "Pyrogram Json Bot",
@@ -27,17 +29,15 @@ Made by @FayasNoushad"""
 ABOUT_TEXT = """**About Me**
 
 - **Bot :** `Pyrogram Json Bot`
-- **Developer :** [Fayas](https://github.com/FayasNoushad)
-- **Channel :** [Fayas Noushad](https://telegram.me/FayasNoushad)
+- **Developer :** [GitHub](https://github.com/FayasNoushad) | [Telegram](https://telegram.me/FayasNoushad)
 - **Source :** [Click here](https://github.com/FayasNoushad/Pyrogram-Json-Bot)
 - **Language :** [Python3](https://python.org)
-- **Library :** [Pyrogram](https://pyrogram.org)"""
+- **Framework :** [Pyrogram](https://pyrogram.org)"""
 
 START_BUTTONS = InlineKeyboardMarkup(
     [
         [
-            InlineKeyboardButton('Channel', url='https://telegram.me/FayasNoushad'),
-            InlineKeyboardButton('Feedback', url='https://telegram.me/TheFayas')
+            InlineKeyboardButton('Send Feedback', url='https://telegram.me/FayasNoushad')
         ],
         [
             InlineKeyboardButton('Help', callback_data='help'),
@@ -70,7 +70,7 @@ ABOUT_BUTTONS = InlineKeyboardMarkup(
 JSON_BUTTON = InlineKeyboardMarkup(
     [
         [
-            InlineKeyboardButton('⚙ Join Updates Channel ⚙', url='https://telegram.me/FayasNoushad')
+            InlineKeyboardButton('⚙ Send Feedback ⚙', url='https://telegram.me/FayasNoushad')
         ]
     ]
 )
@@ -127,12 +127,18 @@ async def about(bot, update):
     )
 
 
-@Bot.on_message(filters.private & (filters.text | filters.media | filters.service) & ~filters.reply & ~filters.edited)
+@Bot.on_edited_message(filters.private & (filters.text | filters.media | filters.service))
+@Bot.on_message(filters.private & (
+    filters.text | filters.media | filters.service) & filters.reply)
+@Bot.on_message(filters.private & (filters.text | filters.media | filters.service))
 async def private(bot, update):
+    if update.text == "/json":
+        await group(bot, update)
+        return
     await reply_file(bot, update)
 
 
-@Bot.on_message((filters.group | filters.private) & filters.command(["json"]))
+@Bot.on_message(filters.group & filters.command(["json"]))
 async def group(bot, update):
     await reply_file(bot, update.reply_to_message)
 
